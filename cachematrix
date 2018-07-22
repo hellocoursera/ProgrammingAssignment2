@@ -1,0 +1,70 @@
+#Here we try to get a matrix and find the inverse of it
+
+#Here we use set, get, set inverse & get inverse for our function
+
+makeCacheMatrix <- function(x = matrix()) {
+  
+  inv <- NULL
+  
+  set <- function(y) {
+    
+    x <<- y
+    
+    inv <<- NULL
+    
+  }
+  
+  get <- function() x
+  
+  setinverse <- function(inverse) inv <<- inverse
+  
+  getinverse <- function() inv
+  
+  list(set=set, get=get, setinverse=setinverse, getinverse=getinverse)
+  
+}
+
+
+
+
+
+# The next set of functions checks if the matrix is already printed if so it
+#gives the printed matrix if not it inverses and produced the desired result
+
+
+
+# This function assumes that the matrix is always invertible.
+
+cacheSolve <- function(x, ...) {
+  
+  inv <- x$getinverse()
+  
+  if(!is.null(inv)) {
+    
+    message("getting cached data.")
+    
+    return(inv)
+    
+  }
+  
+  data <- x$get()
+  
+  inv <- solve(data)
+  
+  x$setinverse(inv)
+  
+  inv
+  
+}
+
+
+
+
+##try these as inputs
+x = rbind(c(1, -1/2), c(-1/2, 1))
+
+m = makeCacheMatrix(x)
+
+m$get()
+
+cacheSolve(m)
